@@ -109,8 +109,8 @@ class Particle:
 
 
 ###################################################################################################################
-    # this function calculates the time cost (permutation [123*456*899... n]). Case study (z1)
-    # Section 4 in paper. Equations 34-35.
+    # this function calculates the time cost (permutation [123*456*899... n]). Case study (f1)
+    # Section 4.1 in paper. Equations 23.
     def CostoTiempo(self):
         # machine index
         maquina = 0
@@ -135,8 +135,8 @@ class Particle:
 
 
 ###################################################################################################################
-    # this function calculates the certainty (permutation [123*456*899... n]). Case study (-z2)
-    # Section 4 in paper. Equations 36-37.
+    # this function calculates the certainty (permutation [123*456*899... n]). Case study (-f2)
+    # Section 4.1 in paper. Equations 26.
     def nivelConfianza(self):
         maquina = 0
         conf = self.insInfo.instancia["Obj1" + str(maquina)].values.tolist()
@@ -154,7 +154,7 @@ class Particle:
 
 ###################################################################################################################
     # this function calculates the possibility of a task being interrupted (permutation [123*456*899... n]).
-    #  Case study (z3) Section 4 in paper. Equation 38.
+    #  Case study (f3) Section 4.1 in paper. Equation 27.
     def porcentajeRojos(self):
         maquina = 0
         crojo = self.insInfo.instancia["Obj2" + str(maquina)].values.tolist()
@@ -193,7 +193,7 @@ class Particle:
 
 
 ###################################################################################################################
-    # Sigma equation 12 in paper. Section 2
+    # Sigma Equation 4, Section 2.2 in paper.
     def getSigma(self,
                  particula):
         x = -1 * np.array(self.Objetives)
@@ -207,7 +207,7 @@ class Particle:
 
 
 ###################################################################################################################
-    # Strict preference (xPy) Table 1 in Section 2 in paper.
+    # Strict preference (xPy) Table 1 in Section 2.2 in paper.
     def PE(self,
            sigmaXY,
            sigmaYX):
@@ -223,7 +223,7 @@ class Particle:
 
 
 ###################################################################################################################
-    # Preference relation for (xQy, xRy, xKy) Table 1 in Section 2 in paper.
+    # Preference relation for (xQy, xRy, xKy) Table 1 in Section 2.2 in paper.
     def PD(self,
            sigmaXY,
            sigmaYX):
@@ -242,7 +242,7 @@ class Particle:
 
 
 ###################################################################################################################
-    # The concordance index. Section 2 in paper. Equations 3-6.
+    # The concordance index. Section 2.2 in paper. Equations 5.
     def concordancia(self,
                      x,
                      y):
@@ -260,7 +260,7 @@ class Particle:
 
 
 ###################################################################################################################
-    # The discordance index. Section 2 in paper. Equations 9-11.
+    # The discordance index. Section 2.2 in paper. Equations 9.
     def discordancia(self,
                      x,
                      y):

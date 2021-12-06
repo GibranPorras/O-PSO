@@ -60,7 +60,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # this is the P1 technique. P1 randomly generates shcedules. Section 3 in paper
+    # this is the n1 technique. n1 randomly generates shcedules. Section 3.1 in paper
     def estrategiaN1(self):
         N1 = []
         for i in range(999 - self.insInfo.obj):
@@ -81,7 +81,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # this is the P2 technique. P2 uses the full-greedy technique. Section 3 in paper
+    # this is the n2 technique. n2 uses the full-greedy technique. Section 3.1 in paper
     def estrategiaN2(self):
         N2 = []
         objetivos = []
@@ -94,7 +94,7 @@ class Algorithm:
         ul = self.insInfo.jobs.copy()
         pih = np.empty_like(self.insInfo.jobs)
 
-        # full-greedy technique. Section 3 in paper. Algorithm 1.
+        # full-greedy technique. Section 3.1 in paper. Algorithm 1.
         while ul:
             nk = []
             i = np.random.choice(ul)
@@ -114,7 +114,7 @@ class Algorithm:
         maquina = np.where(pih == self.insInfo.m - 1)[0].tolist()
         particle += maquina
 
-        # Sorting of jobs in ascending order based on time (SPT). Section 3 in paper
+        # Sorting of jobs in ascending order based on time.
         particle = self.SortJobs(particle)
         P = Particle(particle,
                      self.insInfo)
@@ -129,7 +129,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # this is the P3 technique. P3 uses the half-greedy technique. Section 3 in paper
+    # this is the n3 technique. n3 uses the half-greedy technique. Section 3.1 in paper
     # m = number of machines
     # n = number of jobs
     def estrategiaN3(self):
@@ -143,7 +143,7 @@ class Algorithm:
         ul = self.insInfo.jobs.copy()
         pi = np.empty([self.insInfo.obj, self.insInfo.n]).tolist()
 
-        # half-greedy technique. Section 3 in paper. Algorithm 2.
+        # half-greedy technique. Section 3.1 in paper. Algorithm 2.
         while ul:
             i = np.random.choice(ul)
             for o in range(self.insInfo.obj):
@@ -158,7 +158,7 @@ class Algorithm:
                 p.append("*")
                 permu += p
             permu += np.where(mObj == self.insInfo.m - 1)[0].tolist()
-            # Sorting of jobs in ascending order based on time (SPT). Section 3 in paper
+            # Sorting of jobs in ascending order based on time.
             particulas.append(self.SortJobs(permu))
 
         for par in particulas:
@@ -175,7 +175,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # SPT strategy to sort the sequence of jobs in each machine. Section 3 in paper.
+    # strategy to sort the sequence of jobs in each machine.
     # this function receives a particle as input.
     def SortJobs(self,
                  particle):
@@ -215,7 +215,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # Update the best known particle pBest. Section 3 in paper.
+    # Update the best known particle pBest. Section 3.2 in paper.
     def UpdatePbest(self,
                     Pbest):
         for i in range(len(self.nube)):
@@ -235,7 +235,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # Update the best known global particle gBest. Section 3 in paper.
+    # Update the best known global particle gBest. Section 3.2 in paper.
     def UpdateGbest(self,
                     paretoSet,
                     gBest):
@@ -301,7 +301,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # The O-PSO technique to generate the elitist set, and generate the fronts. Section 2 in paper. ELECTRE III method
+    # The O-PSO technique to generate the elitist set, and generate the fronts. Section 3.6 in paper. ELECTRE III method
     def ELECTRE(self,
                 Nube):
         F = []
@@ -320,7 +320,7 @@ class Algorithm:
             if not preferencia:
                 Frente.append(n)
 
-        # Sigma calcuation. Equation 12, Section 2 in paper.
+        # Sigma calcuation. Equation 4, Section 2.2 in paper.
         # Outranking, concordance and discordance matrices are calculated here. Equations 3-12. Section 2 in paper
         for part in Frente:
             sigP = []
@@ -332,12 +332,12 @@ class Algorithm:
 
             sigmas.append(sigP)
 
-        # Sigma matrix, outraniking concept. Equation 12, Section 2 in paper.
+        # Sigma matrix, outraniking concept. Equation 4, Section 2.2 in paper.
         sigmas = np.array(sigmas)
 
-        # Preference relation begins here. Section 2 in paper.
+        # Preference relation begins here. Section 2.2 in paper.
 
-        # First we calculate the net-flow. Table 2, Section in paper.
+        # First we calculate the net-flow. Table 1, Section in paper.
         Fs = []
         for i in range(len(sigmas)):
             sXy = np.sum(sigmas[i])
@@ -350,9 +350,9 @@ class Algorithm:
         Xsp = []
         for i in range(len(Frente)):
             xprima = []
-            # solution not strictly outranking x, Table 2, Section 2 in paper. (Strict preference Table 1).
+            # solution not strictly outranking x, Table 1, Section 2.2 in paper. (Strict preference).
             ns = 0
-            # Solutions weakly outranking x, Table 2, Section 2 in paper. (Weakpreference Table 1).
+            # Solutions weakly outranking x, Table 1, Section 2.2 in paper. (Weakpreference).
             nq = 0
             # Solutions that are greater than x in net flow-score
             fn = 0
@@ -380,7 +380,7 @@ class Algorithm:
                 Xsp.remove(xs)
 
         # generating fronts
-        # Problem Equation 13 Section 2 in paper.
+        # Problem Equation 11 Section 3.2 in paper.
         while len(Frente) != 0:
             fr = []
             xspremove = []
@@ -389,7 +389,7 @@ class Algorithm:
             for i in range(len(tempf)):
                 for j in range(len(tempf)):
                     if i != j:
-                        # Pareto concept evaluation for the problem in equation 13.
+                        # Pareto concept evaluation for the problem in equation 11.
                         pref = self.paretoFneto([Xsp[j][1],
                                             Xsp[j][2]],
                                            [Xsp[i][1],
@@ -490,7 +490,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # this is local search algorithm. Section 3 in paper
+    # this is local search algorithm. Section 3.5 in paper
     def lambdaSwap(self):
         for frente in self.paretoSet:
             for index in range(len(frente)):
@@ -516,7 +516,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # this is the function to update the operators. Section 3 in paper (Updating velocity and position of particles)
+    # this is the function to update the operators. Section 3.3 in paper (Updating velocity and position of particles)
     def UpdatingOperators(self,
                           pBest,
                           gBest):
@@ -543,7 +543,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # The subtraction operator (−). Section 3 in paper. Equations 19-22.
+    # The subtraction operator (−). Section 3.3 in paper.
     def Substraction(self,
                      schedule1,
                      schedule2):
@@ -558,7 +558,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # The selection operator (×). Section 3 in paper. Equation 23.
+    # The selection operator (×). Section 3.3 in paper.
     def Select(self,
                delta,
                peso):
@@ -574,7 +574,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # The function of the and-or (+). Section 3 in paper. Equations 24-29.
+    # The function of the and-or (+). Section 3.3 in paper.
     def AndOr(self,
               delta1,
               delta2,
@@ -597,7 +597,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # Updating the position of the particles. Map operator in paper (Section 3). Equations 30-32.
+    # Updating the position of the particles. Map operator in paper (Section 3.3).
     def MapOperator(self,
                     Schedule,
                     velocidad):
@@ -681,7 +681,7 @@ class Algorithm:
 
 
 ###################################################################################################################
-    # Pareto concept to evaluate net-flow. Equation 13 in paper. Section 2 in paper.
+    # Pareto concept to evaluate net-flow. Table 1 in paper. Section 2.2 in paper.
     def paretoFneto(self,
                     ox,
                     oy):
