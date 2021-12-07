@@ -7,6 +7,7 @@ Created on Tue Jan 15 16:24:41 2019
 
 import pandas as pd
 import math
+import os
 import os.path
 
 
@@ -228,6 +229,9 @@ class InstanceInfo:
                    fr,
                    tiempo,
                    prueba):
+
+        os.makedirs('experimentos/sinls/'+str(self.n)+"_"+str(self.m)+"/class"+str(self.clase), exist_ok=True)
+
         f = open("experimentos/sinls/"+str(self.n)+"_"+str(self.m)+"/class"+str(self.clase)+"/clase"+str(self.clase)+"m"+str(self.m)+"j"+str(self.n)+"-F"+str(fr)+"-P"+str(prueba)+".txt", "w")
         for particula in frente:
             for dato in particula.Schedule:
